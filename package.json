@@ -5,10 +5,13 @@
   "private": true,
   "main": "start.js",
   "scripts": {
-    "start": "node --use_strict start.js"
+    "start": "npm install && node --use_strict start.js"
   },
   "author": "Ionut-Cristian Florescu <ionut.florescu@gmail.com>",
   "license": "ISC",
+  "dependencies": {
+    "twitter": "^1.2.5"
+  },
   "devDependencies": {
     "express": "^4.13.4",
     "request": "^2.69.0",
