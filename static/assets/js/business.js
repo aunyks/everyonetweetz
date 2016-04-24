@@ -28,14 +28,15 @@ $(document).ready(function(){
             message: tweet
         },
         function(data, status){
+            $('hr').slideUp(2000);
+            $('#asdf').slideUp(2000);
+            $('#motto').text('Thank you!');
             if(status === 'success'){
                alert('Tweet sent! Thank you!');
             }else{
                alert('Um..something happened on our side.\nTry again in a few minutes please!');
             }
         });
-        
-        $('#motto').text('Thank you!');
     });
     
 });
