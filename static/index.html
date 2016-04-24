@@ -9,11 +9,14 @@
 		<title>Everyone Tweets</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#FF7788" />
 		<!--[if lte IE 8]><script src="assets/js/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
+		<script src="assets/js/business.js"></script>
 	</head>
 	<body class="is-loading">
 
@@ -23,7 +26,7 @@
 				<!-- Main -->
 					<section id="main">
 						<header>
-							<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>
+							<span class="avatar"><img src="images/earth.jpg" height="75" width="130" alt="" /></span>
 							<h1>Everyone Tweets</h1>
 							<p>One account for the whole world.
 						</header>
@@ -31,19 +34,20 @@
 						<hr />
 						<h2>Speak your mind!</h2>
 						<form method="post" action="#">
-							<div class="field">
+							<div class="field" >
 								<textarea name="message" id="message" maxlength="140" placeholder="Message" rows="4"></textarea>
+								<p id="msgBlock"></p>
 							</div>
-							<div class="field">
+							<!--<div class="field">
 								<input type="checkbox" id="human" name="human" /><label for="human">I'm a human</label>
 							</div>
 							<div class="field">
 								<label>Are you sure?</label>
 								<input type="radio" id="robot_yes" name="robot" /><label for="robot_yes">Yes</label>
 								<input type="radio" id="robot_no" name="robot" /><label for="robot_no">No</label>
-							</div>
+							</div>-->
 							<ul class="actions">
-								<li><a href="#" class="button">Tweet</a></li>
+								<li><a  id="btn" class="button" style="background: #4099FF;color: white;">Tweet</a></li>
 							</ul>
 						</form>
 						<hr />

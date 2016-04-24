@@ -10,6 +10,13 @@ let server = http.createServer(function (req, res) {
   if (url == '/') {
     url += 'index.html';
   }
+  
+  var twit = new Twitter({
+    consumer_key: 'gME5ZgJJTmaRpOzDtM1FuQ3YP',
+    consumer_secret: 'sFlQlf7gPeJa6g2w5eUw5GV76rPnz6nPofVzZPtHDFnBUPaOz9',
+    access_token_key: '724053135489007616-5siprGuhRBF7UPugt34SnqtjP60bFgB',
+    access_token_secret: 'A4tcDBuUCbKwuLtwR0kzOCti4wh3cilX2zWkn1Om7JXlh',
+});
 
   // IMPORTANT: Your application HAS to respond to GET /health with status 200
   //            for OpenShift health monitoring
@@ -21,7 +28,34 @@ let server = http.createServer(function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 'no-cache, no-store');
     res.end(JSON.stringify(sysInfo[url.slice(6)]()));
-  } else {
+  } else if(url.indexOf('/announce') == 0 || url.indexOf('/announce/') == 0){
+    
+    if(req.method == 'POST'){
+      var tweet = '';
+    
+      req.on('data', function(chunk) {
+        // append the current chunk of data to the fullBody variable
+        tweet += chunk.toString();
+      });
+      
+      req.on('end', function() {
+        
+        twit.post('/statuses/update', {
+                        status: tweet
+                    }, function(err, tweet, response) {
+                        if (err) {
+                        } else {
+                        }
+          });
+        
+        // empty 200 OK response for now
+        res.writeHead(200, "OK", {'Content-Type': 'text/plain'});
+        res.end();
+      });
+      
+    }
+    
+  }else {
     fs.readFile('./static' + url, function (err, data) {
       if (err) {
         res.writeHead(404);
