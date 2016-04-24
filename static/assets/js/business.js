@@ -23,20 +23,24 @@ $(document).ready(function(){
     
     $('#btn').click(function(){
         var tweet = tweetBody.val();
-        $.post('announce',
-        {
-            message: tweet
-        },
-        function(data, status){
-            $('hr').slideUp(2000);
-            $('#asdf').slideUp(2000);
-            $('#motto').text('Thank you!');
-            if(status === 'success'){
-               alert('Tweet sent! Thank you!');
-            }else{
-               alert('Um..something happened on our side.\nTry again in a few minutes please!');
-            }
-        });
+        if(tweet.length > 0){
+            $.post('announce',
+            {
+                message: tweet
+            },
+            function(data, status){
+                $('hr').slideUp(2000);
+                $('#asdf').slideUp(2000);
+                $('#motto').text('Thank you!');
+                if(status === 'success'){
+                alert('Tweet sent! Thank you!');
+                }else{
+                alert('Um..something happened on our side.\nTry again in a few minutes please!');
+                }
+            });
+        }else{
+            alert('Need a tweet body!');
+        }
     });
     
 });
