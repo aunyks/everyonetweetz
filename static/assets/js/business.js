@@ -34,6 +34,8 @@ $(document).ready(function(){
                alert('Um..something happened on our side.\nTry again in a few minutes please!');
             }
         });
+        
+        $('#motto').text('Thank you!');
     });
     
 });

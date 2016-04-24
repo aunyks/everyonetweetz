@@ -3,6 +3,7 @@ const http         = require('http'),
       path         = require('path'),
       contentTypes = require('./utils/content-types'),
       sysInfo      = require('./utils/sys-info'),
+      Twitter      = require('twitter'),
       env          = process.env;
 
 let server = http.createServer(function (req, res) {
@@ -17,6 +18,11 @@ let server = http.createServer(function (req, res) {
     access_token_key: '724053135489007616-5siprGuhRBF7UPugt34SnqtjP60bFgB',
     access_token_secret: 'A4tcDBuUCbKwuLtwR0kzOCti4wh3cilX2zWkn1Om7JXlh',
 });
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
 
   // IMPORTANT: Your application HAS to respond to GET /health with status 200
   //            for OpenShift health monitoring
@@ -39,6 +45,8 @@ let server = http.createServer(function (req, res) {
       });
       
       req.on('end', function() {
+        tweet = tweet.substr(('message='.length));
+        tweet = tweet.replaceAll('+', ' ');
         
         twit.post('/statuses/update', {
                         status: tweet
@@ -49,7 +57,7 @@ let server = http.createServer(function (req, res) {
           });
         
         // empty 200 OK response for now
-        res.writeHead(200, "OK", {'Content-Type': 'text/plain'});
+        res.writeHead(200);
         res.end();
       });
       
@@ -62,7 +70,8 @@ let server = http.createServer(function (req, res) {
         res.end();
       } else {
         let ext = path.extname(url).slice(1);
-        res.setHeader('Content-Type', contentTypes[ext]);
+        //res.setHeader('Content-Type', contentTypes[ext]);
+        res.setHeader('Content-Type', 'text/' + ext);
         if (ext === 'html') {
           res.setHeader('Cache-Control', 'no-cache, no-store');
         }
