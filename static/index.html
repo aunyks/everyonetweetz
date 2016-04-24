@@ -1,35 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Custom Node.js cartridge for OpenShift</title>
-  <meta name="description" content="Custom cartridge for OpenShift providing the lastest version of Node.js.">
-  <meta name="keywords" content="Node.js, JavaScript, ES6, OpenShift, es6, paas">
-  <meta name="author" content="Ionut-Cristian Florescu">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link href='https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono' rel='stylesheet' type='text/css'>
-  <link href="main.css" rel="stylesheet">
-</head>
-<body>
-  <header>
-    <a href="https://github.com/icflorescu/openshift-cartridge-nodejs"><img class="fork" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
-    <p>This is a</p>
-    <img class="logo" title="Node.js" src="nodejs-logo.svg">
-    <p>application running in a <a href="https://github.com/icflorescu/openshift-cartridge-nodejs" target="_blank">custom cartridge</a> on</p>
-    <img class="logo" title="OpenShift Online Logo" src="openshift-online-logo.svg">
-  </header>
-  <main>
-    <info type="gen"></info>
-    <info type="poll"></info>
-  </main>
-  <footer>
-    <p>Developed by <a href="https://github.com/icflorescu" target="_blank">Ionut-Cristian Florescu</a> and released under the <a href="https://github.com/icflorescu/openshift-cartridge-nodejs/blob/master/LICENSE">ISC License</a>.</p>
-  </footer>
-  <script src="https://cdn.jsdelivr.net/riot/2.3.16/riot+compiler.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/superagent/0.18.0/superagent.min.js"></script>
-  <script type="riot/tag" src="info.tag"></script>
-  <script>
-    riot.mount('*')
-  </script>
-</body>
+<!DOCTYPE HTML>
+<!--
+	Identity by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Everyone Tweets</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<section id="main">
+						<header>
+							<span class="avatar"><img src="images/avatar.jpg" alt="" /></span>
+							<h1>Everyone Tweets</h1>
+							<p>One account for the whole world.
+						</header>
+            
+						<hr />
+						<h2>Speak your mind!</h2>
+						<form method="post" action="#">
+							<div class="field">
+								<textarea name="message" id="message" maxlength="140" placeholder="Message" rows="4"></textarea>
+							</div>
+							<div class="field">
+								<input type="checkbox" id="human" name="human" /><label for="human">I'm a human</label>
+							</div>
+							<div class="field">
+								<label>Are you sure?</label>
+								<input type="radio" id="robot_yes" name="robot" /><label for="robot_yes">Yes</label>
+								<input type="radio" id="robot_no" name="robot" /><label for="robot_no">No</label>
+							</div>
+							<ul class="actions">
+								<li><a href="#" class="button">Tweet</a></li>
+							</ul>
+						</form>
+						<hr />
+						<footer>
+							<ul class="icons">
+								<li><a href="https://twitter.com/any1ever" class="fa-twitter" target="_blank">Twitter</a></li>
+							</ul>
+						</footer>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<ul class="copyright">
+							<li>&copy; <a href="http://gnash48.github.io/">Gerald Nash</a></li>
+							<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<!--[if lte IE 8]><script src="assets/js/respond.min.js"></script><![endif]-->
+			<script>
+				if ('addEventListener' in window) {
+					window.addEventListener('load', function() { document.body.className = document.body.className.replace(/\bis-loading\b/, ''); });
+					document.body.className += (navigator.userAgent.match(/(MSIE|rv:11\.0)/) ? ' is-ie' : '');
+				}
+			</script>
+
+	</body>
 </html>
