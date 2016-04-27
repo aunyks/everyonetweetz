@@ -48,12 +48,21 @@ String.prototype.replaceAll = function(search, replacement) {
         tweet = tweet.substr(('message='.length));
         tweet = tweet.replaceAll('+', ' ');
         
+        var tweetID = "";
+        
+        // Post
         twit.post('/statuses/update', {
                         status: tweet
                     }, function(err, tweet, response) {
                         if (err) {
                         } else {
+                          tweetID = tweet.id;
                         }
+          });
+          
+          // Log
+          fs.appendFile(process.env.OPENSHIFT_DATA_DIR+"tweets.log", ("\n\n"+tweetID+" "+req.connection.remoteAddress+"\n"+tweet), function(err) {
+            console.error(err);
           });
         
         // empty 200 OK response for now
