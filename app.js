@@ -46,6 +46,7 @@ String.prototype.replaceAll = function(search, replacement) {
       
       req.on('end', function() {
         tweet = tweet.substr(('message='.length));
+        tweet = tweet.replaceAll('+', ' ');
         tweet = decodeURIComponent(tweet);
         
         var tweetID = "";
