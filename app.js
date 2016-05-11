@@ -46,7 +46,7 @@ String.prototype.replaceAll = function(search, replacement) {
       
       req.on('end', function() {
         tweet = tweet.substr(('message='.length));
-        tweet = tweet.replaceAll('+', ' ');
+        tweet = decodeURIComponent(tweet);
         
         var tweetID = "";
         
@@ -75,7 +75,7 @@ String.prototype.replaceAll = function(search, replacement) {
   }else {
     fs.readFile('./static' + url, function (err, data) {
       if (err) {
-        res.writeHead(404);
+        res.writeHead(301, {Location: 'http://everyonetweets-gnash48.rhcloud.com/'});
         res.end();
       } else {
         let ext = path.extname(url).slice(1);
