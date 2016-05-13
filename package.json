@@ -1,13 +1,13 @@
 {
-  "name": "openshift-cartridge-nodejs-template",
+  "name": "EveryoneTweets",
   "version": "1.0.1",
-  "description": "Custom Node.js cartridge for OpenShift - sample application",
+  "description": "One account for the whole world.",
   "private": true,
   "main": "start.js",
   "scripts": {
     "start": "node --use_strict start.js"
   },
-  "author": "Ionut-Cristian Florescu <ionut.florescu@gmail.com>",
+  "author": "Gerald Nash <g.nash.dev@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "twitter": "^1.2.5"

@@ -14,7 +14,7 @@ $(document).ready(function(){
         if(remaining <= 10)
             $('#msgBlock').css("color","red");
         else if(remaining <= 20)
-            $('#msgBlock').css("color","yellow");
+            $('#msgBlock').css("color","orange");
         else
             $('#msgBlock').css("color","black");
         
@@ -29,13 +29,13 @@ $(document).ready(function(){
                 message: tweet
             },
             function(data, status){
-                $('hr').slideUp(2000);
-                $('#asdf').slideUp(2000);
-                $('#motto').text('Thank you!');
                 if(status === 'success'){
-                alert('Tweet sent! Thank you!');
+                    alert('Tweet sent! Thank you!');
+                    $('hr').slideUp(2000);
+                    $('#asdf').slideUp(2000);
+                    $('#motto').text('Thank you!');
                 }else{
-                alert('Um..something happened on our side.\nTry again in a few minutes please!');
+                    alert('Um..something happened on our side.\nTry again in a few minutes please!');
                 }
             });
         }else{
