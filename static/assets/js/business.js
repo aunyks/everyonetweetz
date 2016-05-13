@@ -31,8 +31,8 @@ $(document).ready(function(){
             function(data, status){
                 if(status === 'success'){
                     alert('Tweet sent! Thank you!');
-                    $('hr').slideUp(2000);
-                    $('#asdf').slideUp(2000);
+                    $('hr').slideUp(1500);
+                    $('#asdf').slideUp(1500);
                     $('#motto').text('Thank you!');
                 }else{
                     alert('Um..something happened on our side.\nTry again in a few minutes please!');
