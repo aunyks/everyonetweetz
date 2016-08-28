@@ -1,5 +1,5 @@
 {
-  "name": "EveryoneTweets",
+  "name": "EveryoneTweetz",
   "version": "1.0.1",
   "description": "One account for the whole world.",
   "private": true,
@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node --use_strict start.js"
   },
-  "author": "Gerald Nash <g.nash.dev@gmail.com>",
+  "author": "Gerald Nash <g.nash.dev@gmail.com> (aunyks.com)",
   "license": "ISC",
   "dependencies": {
     "twitter": "^1.2.5"
