@@ -1,28 +1,29 @@
 $(document).ready(function(){
-    
+    $('#radioBtns').hide(0);
     var tweetBody = $('#message');
     var characters = 140;
-    
+
     tweetBody.keyup(function(){
-        
+
         var  remaining = characters - $(this).val().length;
         $('#msgBlock').text(remaining+" Characters remaining");
         if($(this).val().length > characters){
             $(this).val($(this).val().substr(0, characters));
         }
-        
+
         if(remaining <= 10)
             $('#msgBlock').css("color","red");
         else if(remaining <= 20)
             $('#msgBlock').css("color","orange");
         else
             $('#msgBlock').css("color","black");
-        
-        
+
+
     });
-    
+
     $('#btn').click(function(){
         var tweet = tweetBody.val();
+        var animRate = 750;
         if(tweet.length > 0){
             $.post('announce',
             {
@@ -30,17 +31,30 @@ $(document).ready(function(){
             },
             function(data, status){
                 if(status === 'success'){
-                    alert('Tweet sent! Thank you!');
-                    $('hr').slideUp(1500);
-                    $('#asdf').slideUp(1500);
-                    $('#motto').text('Thank you!');
+                    $('.rm').slideUp(animRate);
+                    $('#motto').html('Thank you!<br><br>Would you like to<br>send another tweet?');
+
+                    $('#radioBtns').show(animRate, function(){
+                      $('#robot_yes').click(function(){
+                        $('#motto').html('Speak your mind!');
+                        $('#message').val('');
+                        $('.rm').slideDown(animRate);
+                        $('#radioBtns').hide(animRate);
+                        $('#robot_yes').prop('checked', false);
+                      });
+
+                      $('#robot_no').click(function(){
+                        $('#motto').html('Thank you!');
+                        $('#radioBtns').hide(animRate);
+                      });
+                    });
                 }else{
                     alert('Um..something happened on our side.\nTry again in a few minutes please!');
                 }
             });
         }else{
-            alert('Need a tweet body!');
+            alert('You have to say something first!');
         }
     });
-    
+
 });
