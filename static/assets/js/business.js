@@ -45,7 +45,7 @@ $(document).ready(function(){
 
                       $('#robot_no').click(function(){
                         $('#motto').html('Thank you!');
-                        $('#radioBtns').hide(animRate);
+                        $('#radioBtns').slideUp(animRate);
                       });
                     });
                 }else{
