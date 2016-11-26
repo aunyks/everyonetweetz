@@ -6,77 +6,100 @@ const http         = require('http'),
       Twitter      = require('twitter'),
       env          = process.env;
 
+String.prototype.replaceAll = function(search, replacement) {
+  let target = this;
+  return target.split(search).join(replacement);
+};
+
 let server = http.createServer(function (req, res) {
   let url = req.url;
+
+  // If root directory, redirect directly to index.html
+  // to limit CPU cycles on our side
   if (url == '/') {
     url += 'index.html';
   }
-  
-  var twit = new Twitter({
+
+  // Credentials and other super secret information
+  let twit = new Twitter({
     consumer_key: 'gME5ZgJJTmaRpOzDtM1FuQ3YP',
     consumer_secret: 'sFlQlf7gPeJa6g2w5eUw5GV76rPnz6nPofVzZPtHDFnBUPaOz9',
     access_token_key: '724053135489007616-5siprGuhRBF7UPugt34SnqtjP60bFgB',
     access_token_secret: 'A4tcDBuUCbKwuLtwR0kzOCti4wh3cilX2zWkn1Om7JXlh',
-});
+  });
 
-String.prototype.replaceAll = function(search, replacement) {
-    var target = this;
-    return target.split(search).join(replacement);
-};
+  // This route will provides essential system information
+  // in lovely JSON format
+  // See utils/sys-info.js for more information
+  if (url.indexOf('/info') == 0 || url.indexOf('/info/') == 0) {
 
-  // IMPORTANT: Your application HAS to respond to GET /health with status 200
-  //            for OpenShift health monitoring
-
-  if (url == '/health') {
-    res.writeHead(200);
-    res.end();
-  } else if (url.indexOf('/info/') == 0) {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 'no-cache, no-store');
     res.end(JSON.stringify(sysInfo[url.slice(6)]()));
-  } else if(url.indexOf('/announce') == 0 || url.indexOf('/announce/') == 0){
-    
-    if(req.method == 'POST'){
-      var tweet = '';
-    
+
+  // This route does most of the work, it receives a post request
+  // and posts the body of the request to Twitter after some cleaning
+} else if(url.indexOf('/announce') === 0 || url.indexOf('/announce/') === 0){
+
+    if(req.method === 'POST'){
+
+      // We receive the post request data in chunks,
+      // so we just concat the chunks as we receive them
+      // to get the entire tweet
+      let tweet = '';
       req.on('data', function(chunk) {
-        // append the current chunk of data to the fullBody variable
         tweet += chunk.toString();
       });
-      
-      req.on('end', function() {
+
+      // When the last chunk of data has been sent,
+      // the tweet that we have stored here is the
+      // tweet that the user wanted to send, so now
+      // we can post it
+      req.on('end', function(){
+
+        // Technically, we received the tweet as 'message=this+is+a+tweet',
+        // so we start off by trimming off that message= prefix
         tweet = tweet.substr(('message='.length));
+
+        // Now, we get rid of the pluses and replace them with spaces, because
+        // that's how humans write nowadays I guess
         tweet = tweet.replaceAll('+', ' ');
+
+        // Let's replace all urlencoded tokens with their
+        // UTF-8, human-readable counterparts
         tweet = decodeURIComponent(tweet);
-        
-        var tweetID = "";
-        
-        // Post
-        twit.post('/statuses/update', {
-                        status: tweet
-                    }, function(err, tweet, response) {
-                        if (err) {
-                        } else {
-                          tweetID = tweet.id;
-                        }
-          });
-          
-          // Log
-          fs.appendFile(process.env.OPENSHIFT_DATA_DIR+"tweets.log", ("\n\n"+tweetID+" "+req.connection.remoteAddress+"\n"+tweet), function(err) {
-            console.error(err);
-          });
-        
-        // empty 200 OK response for now
+
+        // This looks absolutely hideous but it works.
+        // It posts the tweet from the post request body
+        // to Twitter and stores the id of that tweet
+        // in a variable to be used during logging
+        let tweetID = '';
+        twit.post('/statuses/update',
+                  { status: tweet },
+                  function(err, tweet, response) {
+                    tweetID = tweet.id;
+        });
+
+        // Log our tweets to a file
+        fs.appendFile('/tmp/tweets.log', ("\n\n"+tweetID+" "+req.connection.remoteAddress+"\n"+tweet), function(err){
+          console.error(err);
+        });
+
+        // empty 200 OK response for now just to let the client we know
+        // that everything went alright
         res.writeHead(200);
+
+        // End our connection
         res.end();
       });
-      
     }
-    
+
+  // If the client didn't want system info or to post a tweet,
+  // then they're requesting static files (from our static folder of course!)
   }else {
     fs.readFile('./static' + url, function (err, data) {
       if (err) {
-        res.writeHead(301, {Location: 'http://everyonetweets-gnash48.rhcloud.com/'});
+        res.writeHead(301, {Location: 'https://everyonetweetz.now.sh/'});
         res.end();
       } else {
         let ext = path.extname(url).slice(1);
@@ -91,6 +114,10 @@ String.prototype.replaceAll = function(search, replacement) {
   }
 });
 
-server.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function () {
+// Finished with server configuration.
+// Let's launch it and bind it to the IP and port
+// provided by the environment. If they aren't provided to us,
+// then we simple bind to localhost:3000
+server.listen(env.NODE_PORT || 3000, env.NODE_IP || 'localhost', function(){
   console.log(`Application worker ${process.pid} started...`);
 });
