@@ -1,11 +1,11 @@
 {
   "name": "EveryoneTweetz",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "One account for the whole world.",
   "private": true,
   "main": "start.js",
   "scripts": {
-    "start": "node --use_strict start.js"
+    "start": "node --use_strict app.js"
   },
   "author": "Gerald Nash <g.nash.dev@gmail.com> (aunyks.com)",
   "license": "ISC",

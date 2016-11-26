@@ -6,9 +6,9 @@ const http         = require('http'),
       Twitter      = require('twitter'),
       env          = process.env;
 
+
 String.prototype.replaceAll = function(search, replacement) {
-  let target = this;
-  return target.split(search).join(replacement);
+  return this.split(search).join(replacement);
 };
 
 let server = http.createServer(function (req, res) {
@@ -81,9 +81,12 @@ let server = http.createServer(function (req, res) {
         });
 
         // Log our tweets to a file
+        // Turn this off while we're using Now (now.sh)
+        /*
         fs.appendFile('/tmp/tweets.log', ("\n\n"+tweetID+" "+req.connection.remoteAddress+"\n"+tweet), function(err){
           console.error(err);
         });
+        */
 
         // empty 200 OK response for now just to let the client we know
         // that everything went alright
