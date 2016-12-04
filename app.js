@@ -4,6 +4,7 @@ const http         = require('http'),
       contentTypes = require('./utils/content-types'),
       sysInfo      = require('./utils/sys-info'),
       Twitter      = require('twitter'),
+      twitterData  = require('./sensitive/twitter-creds'),
       env          = process.env;
 
 
@@ -21,12 +22,7 @@ let server = http.createServer(function (req, res) {
   }
 
   // Credentials and other super secret information
-  let twit = new Twitter({
-    consumer_key: 'gME5ZgJJTmaRpOzDtM1FuQ3YP',
-    consumer_secret: 'sFlQlf7gPeJa6g2w5eUw5GV76rPnz6nPofVzZPtHDFnBUPaOz9',
-    access_token_key: '724053135489007616-5siprGuhRBF7UPugt34SnqtjP60bFgB',
-    access_token_secret: 'A4tcDBuUCbKwuLtwR0kzOCti4wh3cilX2zWkn1Om7JXlh',
-  });
+  let twit = new Twitter(twitterData);
 
   // This route will provides essential system information
   // in lovely JSON format
@@ -35,7 +31,7 @@ let server = http.createServer(function (req, res) {
 
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 'no-cache, no-store');
-    res.end(JSON.stringify(sysInfo[url.slice(6)]()));
+    res.end(JSON.stringify(sysInfo(), null, 2));
 
   // This route does most of the work, it receives a post request
   // and posts the body of the request to Twitter after some cleaning
@@ -106,7 +102,6 @@ let server = http.createServer(function (req, res) {
         res.end();
       } else {
         let ext = path.extname(url).slice(1);
-        //res.setHeader('Content-Type', contentTypes[ext]);
         res.setHeader('Content-Type', 'text/' + ext);
         if (ext === 'html') {
           res.setHeader('Cache-Control', 'no-cache, no-store');

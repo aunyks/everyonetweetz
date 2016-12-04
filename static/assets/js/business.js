@@ -1,10 +1,12 @@
 $(document).ready(function(){
+    // Hide radio buttons until we send
+    // our first tweet
     $('#radioBtns').hide(0);
     var tweetBody = $('#message');
     var characters = 140;
 
+    // Show number of charaters left after one key press
     tweetBody.keyup(function(){
-
         var  remaining = characters - $(this).val().length;
         $('#msgBlock').text(remaining+" Characters remaining");
         if($(this).val().length > characters){
@@ -17,10 +19,9 @@ $(document).ready(function(){
             $('#msgBlock').css("color","orange");
         else
             $('#msgBlock').css("color","black");
-
-
     });
 
+    // On Tweet button click, do cool stuff
     $('#btn').click(function(){
         var tweet = tweetBody.val();
         var animRate = 750;
@@ -30,6 +31,7 @@ $(document).ready(function(){
                 message: tweet
             },
             function(data, status){
+
                 if(status === 'success'){
                     $('.rm').slideUp(animRate);
                     $('#motto').html('Thank you!<br><br>Would you like to<br>send another tweet?');
@@ -51,6 +53,7 @@ $(document).ready(function(){
                 }else{
                     alert('Um..something happened on our side.\nTry again in a few minutes please!');
                 }
+                
             });
         }else{
             alert('You have to say something first!');

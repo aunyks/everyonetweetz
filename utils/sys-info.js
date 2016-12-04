@@ -2,7 +2,7 @@ const os = require('os'),
       exec = require('child_process').execSync,
       env = process.env;
 
-exports.gen = function () {
+module.exports = function () {
   return [{
     name: 'Node.js Version',
     value: process.version.replace('v', '')
@@ -33,11 +33,7 @@ exports.gen = function () {
   }, {
     name:  'NODE_ENV',
     value: env.NODE_ENV
-  }];
-};
-
-exports.poll = function () {
-  return [{
+  }, {
     name: 'Free Memory',
     value: `${Math.round(os.freemem() / 1048576)} MB`
   }, {
