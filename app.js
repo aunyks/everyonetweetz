@@ -5,7 +5,11 @@ const http         = require('http'),
       sysInfo      = require('./utils/sys-info'),
       Twitter      = require('twitter'),
       twitterData  = require('./sensitive/twitter-creds'),
-      env          = process.env;
+      env          = process.env,
+      consumer_key = env.consumer_key,
+      consumer_secret = env.consumer_secret,
+      access_token_key = env.access_token_key,
+      access_token_secret = env.access_token_secret;
 
 
 String.prototype.replaceAll = function(search, replacement) {
@@ -22,7 +26,7 @@ let server = http.createServer(function (req, res) {
   }
 
   // Credentials and other super secret information
-  let twit = new Twitter(twitterData);
+  let twit = new Twitter({consumer_key, consumer_secret, access_token_key, access_token_secret});
 
   // This route will provides essential system information
   // in lovely JSON format
