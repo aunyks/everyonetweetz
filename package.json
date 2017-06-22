@@ -5,6 +5,7 @@
   "private": true,
   "main": "start.js",
   "scripts": {
+    "now-deploy": "now -e consumer_key=@consumer_key -e consumer_secret=@consumer_secret -e access_token_key=@access_token_key -e access_token_secret=@access_token_secret",
     "start": "node --use_strict app.js"
   },
   "author": "Gerald Nash <g.nash.dev@gmail.com> (aunyks.com)",
